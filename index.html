@@ -41,6 +41,12 @@
       width: 80%;
       transition: transform 0.2s, background 0.2s;
     }
+    #botonNo {
+  width: 100px;       
+  padding: 12px 20px;  
+  font-size: 16px;    
+}
+
 
     button:hover {
       background: #ff1e4d;
@@ -113,7 +119,7 @@
 <body>
 
   <!-- 🔊 AUDIO VA AQUÍ -->
-  <audio id="sonidoError" src="https://www.myinstants.com/media/sounds/error.mp3"></audio>
+  <audio id="sonidoError" src="https://www.soundjay.com/button/sounds/button-10.mp3"></audio>
 
   <div class="card">
 
@@ -147,7 +153,7 @@
       <h1>Entonces...</h1>
       <p>¿Quieres ser mi cita este San Valentín? 🌹</p>
       <button onclick="acepta()">SÍ 💖</button>
-      <button onclick="mueveBoton(this)">No 😅</button>
+      <button id="botonNo" <button onclick="mueveBoton(this)">No 😅</button>
     </div>
 
     <div id="respuesta" class="hidden">
