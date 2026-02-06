@@ -119,37 +119,44 @@
     </div>
   </div>
 
-  <script>
-    function empezar() {
-      document.getElementById("inicio").classList.add("hidden");
-      document.getElementById("pregunta1").classList.remove("hidden");
-    }
+<script>
+  function empezar() {
+    document.getElementById("inicio").classList.add("hidden");
+    document.getElementById("pregunta1").classList.remove("hidden");
+  }
 
-    function siguiente(num) {
-      document.querySelectorAll(".card > div").forEach(div => div.classList.add("hidden"));
-      document.getElementById("pregunta" + num).classList.remove("hidden");
-    }
+  function siguiente(num) {
+    document.querySelectorAll(".card > div").forEach(div =>
+      div.classList.add("hidden")
+    );
+    document.getElementById("pregunta" + num).classList.remove("hidden");
+  }
 
-    function final() {
-      document.querySelectorAll(".card > div").forEach(div => div.classList.add("hidden"));
-      document.getElementById("final").classList.remove("hidden");
-    }
+  function final() {
+    document.querySelectorAll(".card > div").forEach(div =>
+      div.classList.add("hidden")
+    );
+    document.getElementById("final").classList.remove("hidden");
+  }
 
-    function acepta() {
-      document.getElementById("final").classList.add("hidden");
-      document.getElementById("respuesta").classList.remove("hidden");
-    }
+  function acepta() {
+    document.getElementById("final").classList.add("hidden");
+    document.getElementById("respuesta").classList.remove("hidden");
+  }
 
-    function mueveBoton(btn) {
-      btn.style.position = "absolute";
-      btn.style.top = Math.random() * 80 + "%";
-      btn.style.left = Math.random() * 80 + "%";
-    }
-   <script>
-  function error() {
+  function error(btn) {
     document.getElementById("error2").classList.remove("hidden");
+    document.getElementById("sonidoError").play();
+    btn.classList.add("temblar");
+  }
+
+  function mueveBoton(btn) {
+    btn.style.position = "absolute";
+    btn.style.top = Math.random() * 80 + "%";
+    btn.style.left = Math.random() * 80 + "%";
   }
 </script>
+
 
 </body>
 </html>
