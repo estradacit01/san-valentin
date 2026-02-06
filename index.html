@@ -25,7 +25,7 @@ body {
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   text-align: center;
   position: relative;
-  z-index: 1; /* la carta encima de los corazones */
+  z-index: 1;
 }
 
 h1 { font-size: 26px; }
@@ -62,13 +62,13 @@ button:hover { background: #ff1e4d; transform: scale(1.05); }
 #contador { margin:15px 0; font-size:18px; font-weight:bold; color:#ff4d6d; }
 #botonNo { width: 100px; padding: 8px 12px; font-size: 14px; }
 
-/* CORAZONES FLOTANTES POR TODA LA PANTALLA */
+/* CORAZONES FLOTANTES */
 .heart-float {
   position: fixed;
   color: #ff4d6d;
   pointer-events: none;
   user-select: none;
-  z-index: 0; /* detrás de la carta */
+  z-index: 0;
   opacity: 1;
   animation-name: floatUp;
   animation-timing-function: linear;
@@ -83,9 +83,10 @@ button:hover { background: #ff1e4d; transform: scale(1.05); }
 </head>
 <body>
 
-<audio id="musicaFondo" src="https://www.orangefreesounds.com/wp-content/uploads/2022/02/chill-lofi-love.mp3" loop></audio>
-<audio id="sonidoError" src="https://www.orangefreesounds.com/wp-content/uploads/2017/01/Button-click-sound.mp3"></audio>
-<audio id="sonidoExito" src="https://www.orangefreesounds.com/wp-content/uploads/2017/12/short-notification-sound.mp3"></audio>
+<!-- Audios -->
+<audio id="musicaFondo" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_31e0e3a992.mp3?filename=romantic-ambient-11015.mp3" loop></audio>
+<audio id="sonidoError" src="https://www.orangefreesounds.com/wp-content/uploads/2022/05/soft-click.mp3"></audio>
+<audio id="sonidoExito" src="https://www.orangefreesounds.com/wp-content/uploads/2021/12/short-bell-notification.mp3"></audio>
 
 <div class="card">
   <div id="inicio">
@@ -149,12 +150,11 @@ function empezar() {
   document.getElementById("inicio").classList.add("hidden");
   document.getElementById("pregunta1").classList.remove("hidden");
 
-  // Iniciar música al primer click
+  // iniciar música de fondo
   const musica = document.getElementById("musicaFondo");
-  musica.volume = 0.8; // bajito y romántico
+  musica.volume = 0.2; 
   musica.play().catch(e => console.log("Música bloqueada:", e));
 }
-
 
 function siguiente(num) {
   document.querySelectorAll(".card > div").forEach(d => d.classList.add("hidden"));
@@ -215,7 +215,7 @@ function actualizarContador() {
 }
 actualizarContador();
 
-// === CORAZONES FLOTANTES POR TODA LA PANTALLA ===
+// CORAZONES FLOTANTES
 function crearCorazon() {
   const corazon = document.createElement('div');
   corazon.classList.add('heart-float');
@@ -226,8 +226,8 @@ function crearCorazon() {
   document.body.appendChild(corazon);
   setTimeout(() => corazon.remove(), 5000);
 }
-setInterval(crearCorazon, 100); // muchos corazones
-</script>
+setInterval(crearCorazon, 100);
 
+</script>
 </body>
 </html>
