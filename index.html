@@ -1,34 +1,195 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Sorpresa 💖</title>
+<meta charset="UTF-8">
+<title>Sorpresa 💖</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
+  color: #5a1a2c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 35px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  text-align: center;
+  position: relative;
+}
+h1 { font-size: 26px; }
+p { font-size: 18px; }
+button {
+  background: #ff4d6d;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 20px;
+  font-size: 16px;
+  margin: 12px auto;
+  cursor: pointer;
+  display: block;
+  width: 80%;
+  transition: transform 0.2s, background 0.2s;
+}
+button:hover {
+  background: #ff1e4d;
+  transform: scale(1.05);
+}
+.hidden { display: none !important; }
+.heart { font-size: 40px; animation: latido 1s infinite; }
+@keyframes latido { 0%{transform:scale(1);}50%{transform:scale(1.2);}100%{transform:scale(1);} }
+@keyframes temblar { 0%{transform:translateX(0);}25%{transform:translateX(-5px);}50%{transform:translateX(5px);}75%{transform:translateX(-5px);}100%{transform:translateX(0);} }
+.temblar { animation: temblar 0.4s; }
+.modal {
+  position: fixed; top: 0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.5);
+  display:flex; justify-content:center; align-items:center;
+  z-index:999;
+}
+.modal-contenido {
+  background:white; padding:25px; border-radius:20px;
+  text-align:center; max-width:300px; box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+#contador { margin:15px 0; font-size:18px; font-weight:bold; color:#ff4d6d; }
+/* Botón NO más pequeño */
+#botonNo { width: 100px; padding: 8px 12px; font-size: 14px; }
+</style>
+</head>
+<body>
 
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
-      color: #5a1a2c;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-    }
+<!-- Audios -->
+<audio id="sonidoError" src="https://www.orangefreesounds.com/wp-content/uploads/2017/01/Button-click-sound.mp3"></audio>
+<audio id="sonidoExito" src="https://www.orangefreesounds.com/wp-content/uploads/2017/12/short-notification-sound.mp3"></audio>
 
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 35px;
-      max-width: 500px;
-      width: 90%;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      text-align: center;
-    }
+<div class="card">
+  <div id="inicio">
+    <h1>Hola mimor💕</h1>
+    <p>Tengo algo especial para ti...</p>
+    <button onclick="empezar()">Empezar 💌</button>
+  </div>
 
-    h1 { font-size: 26px; }
-    p { font-size: 18px; }
+  <div id="pregunta1" class="hidden">
+    <p>💗 ¿Te sorprendí?</p>
+    <button onclick="siguiente(2)">Sí mor 💗</button>
+    <button onclick="siguiente(2)">La verdad nop xd</button>
+  </div>
 
-    button {
-      backgr
+  <div id="pregunta2" class="hidden">
+    <p>🌹 ¿Cuál es nuestro aniversario?</p>
+    <button onclick="error(this)">04 mayo 2024</button>
+    <button onclick="siguiente(3)">04 abril 2024</button>
+  </div>
 
+  <div id="pregunta3" class="hidden">
+    <p>✨ Última pregunta…</p>
+    <p>¿Quieres intentarlo conmigo a pesar de la distancia?</p>
+    <button onclick="final()">Claro que sí 💘</button>
+    <button onclick="final()">Contigo, sí 💞</button>
+  </div>
+
+  <div id="final" class="hidden">
+    <div class="heart">❤️</div>
+    <h1>Entonces...</h1>
+    <p>¿Quieres ser mi cita este San Valentín? 🌹</p>
+    <button onclick="acepta()">SÍ 💖</button>
+    <button id="botonNo" onclick="mueveBoton(this)">No 😅</button>
+  </div>
+
+  <div id="respuesta" class="hidden">
+    <h1>❤️❤️</h1>
+    <p>Literalmente no podías decir que no lol.</p>
+    <p>Pero espero hacer de ese día algo inolvidable 💕</p>
+  </div>
+
+  <div id="finalContador" class="hidden">
+    <h1>💖 Cuenta regresiva 💖</h1>
+    <p>para nuestro San Valentín</p>
+    <div id="contador">
+      ⏳ <span id="tiempo"></span> ⏳
+    </div>
+  </div>
+</div>
+
+<div id="modalError" class="modal hidden">
+  <div class="modal-contenido">
+    <h2>😠 Oyeee</h2>
+    <p>Te pasaste okk, pero t perdono...</p>
+    <button onclick="cerrarError()">Intentar otra vez 💗</button>
+  </div>
+</div>
+
+<script>
+function empezar() {
+  document.getElementById("inicio").classList.add("hidden");
+  document.getElementById("pregunta1").classList.remove("hidden");
+}
+
+function siguiente(num) {
+  document.querySelectorAll(".card > div").forEach(d => d.classList.add("hidden"));
+  document.getElementById("pregunta"+num).classList.remove("hidden");
+}
+
+function final() {
+  document.querySelectorAll(".card > div").forEach(d => d.classList.add("hidden"));
+  document.getElementById("final").classList.remove("hidden");
+}
+
+function acepta() {
+  document.querySelectorAll(".card > div").forEach(d => d.classList.add("hidden"));
+  document.getElementById("respuesta").classList.remove("hidden");
+  document.getElementById("sonidoExito").play();
+
+  setTimeout(() => {
+    document.getElementById("respuesta").classList.add("hidden");
+    document.getElementById("finalContador").classList.remove("hidden");
+    actualizarContador();
+    setInterval(actualizarContador, 1000);
+  }, 4000);
+}
+
+function error(btn) {
+  document.getElementById("modalError").classList.remove("hidden");
+  document.getElementById("sonidoError").play();
+  btn.classList.add("temblar");
+}
+
+function mueveBoton(btn) {
+  const card = document.querySelector('.card');
+  const maxWidth = card.clientWidth - btn.offsetWidth;
+  const maxHeight = card.clientHeight - btn.offsetHeight;
+  btn.style.position = "absolute";
+  btn.style.left = Math.random() * maxWidth + "px";
+  btn.style.top = Math.random() * maxHeight + "px";
+  document.getElementById("sonidoError").play();
+}
+
+function cerrarError() {
+  document.getElementById("modalError").classList.add("hidden");
+  document.querySelectorAll(".temblar").forEach(b => b.classList.remove("temblar"));
+}
+
+function actualizarContador() {
+  const ahora = new Date();
+  const sanValentin = new Date(ahora.getFullYear(), 1, 14);
+  if (ahora > sanValentin) sanValentin.setFullYear(sanValentin.getFullYear()+1);
+
+  const diff = sanValentin - ahora;
+  const dias = Math.floor(diff / (1000*60*60*24));
+  const horas = Math.floor((diff/(1000*60*60))%24);
+  const minutos = Math.floor((diff/(1000*60))%60);
+  const segundos = Math.floor((diff/1000)%60);
+
+  document.getElementById("tiempo").textContent = `${dias} días ${horas}h ${minutos}m ${segundos}s`;
+}
+actualizarContador();
+</script>
+</body>
+</html>
