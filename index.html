@@ -83,6 +83,8 @@ button:hover { background: #ff1e4d; transform: scale(1.05); }
 </head>
 <body>
 
+<!-- Audios -->
+<audio id="musicaFondo" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
 <audio id="sonidoError" src="https://www.orangefreesounds.com/wp-content/uploads/2017/01/Button-click-sound.mp3"></audio>
 <audio id="sonidoExito" src="https://www.orangefreesounds.com/wp-content/uploads/2017/12/short-notification-sound.mp3"></audio>
 
@@ -147,6 +149,11 @@ button:hover { background: #ff1e4d; transform: scale(1.05); }
 function empezar() {
   document.getElementById("inicio").classList.add("hidden");
   document.getElementById("pregunta1").classList.remove("hidden");
+  
+  // iniciar música de fondo
+  const musica = document.getElementById("musicaFondo");
+  musica.volume = 0.2; // bajito
+  musica.play();
 }
 
 function siguiente(num) {
