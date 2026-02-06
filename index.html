@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>¿Quieres ser mi San Valentín? 💖</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
+      text-align: center;
+      padding: 20px;
+      color: #5a1a2c;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      font-size: 26px;
+    }
+
+    p {
+      font-size: 18px;
+    }
+
+    button {
+      background: #ff4d6d;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 20px;
+      font-size: 16px;
+      margin: 8px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    button:hover {
+      background: #ff1e4d;
+      transform: scale(1.05);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .heart {
+      font-size: 40px;
+      animation: latido 1s infinite;
+    }
+
+    @keyframes latido {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div id="inicio">
+      <h1>Hola mimor💕</h1>
+      <p>Tengo algo especial para ti, me quebré la cabeza haciendo esto...</p>
+      <button onclick="empezar()">Empezar 💌</button>
+    </div>
+
+    <div id="pregunta1" class="hidden">
+      <p>💗 ¿Te imaginaste que algún día haría algo así?</p>
+      <button onclick="siguiente(2)">Sí mor 💗</button>
+      <button onclick="siguiente(2)">La verdad nop</button>
+    </div>
+
+    <div id="pregunta2" class="hidden">
+      <p>🌹 ¿Qué plan te gusta más?</p>
+      <button onclick="siguiente(3)">Cenita y facetime 🍝</button>
+      <button onclick="siguiente(3)">Película y llamada 🎬</button>
+    </div>
+
+    <div id="pregunta3" class="hidden">
+      <p>✨ Última pregunta…</p>
+      <p>¿Quieres intentarlo conmigo a pesar de la distancia?</p>
+      <button onclick="final()">Claro que sí 💘</button>
+      <button onclick="final()">Contigo, sí 💞</button>
+    </div>
+
+    <div id="final" class="hidden">
+      <div class="heart">❤️</div>
+      <h1>Entonces...</h1>
+      <p>¿Quieres ser mi cita este San Valentín? 🌹</p>
+      <button onclick="acepta()">SÍ 💖</button>
+      <button onclick="mueveBoton(this)">No 😅</button>
+    </div>
+
+    <div id="respuesta" class="hidden">
+      <h1>🥹💘</h1>
+      <p>Sabía que dirías que sí.</p>
+      <p>Espero hacer de ese día algo inolvidable 💕</p>
+    </div>
+  </div>
+
+  <script>
+    function empezar() {
+      document.getElementById("inicio").classList.add("hidden");
+      document.getElementById("pregunta1").classList.remove("hidden");
+    }
+
+    function siguiente(num) {
+      document.querySelectorAll(".card > div").forEach(div => div.classList.add("hidden"));
+      document.getElementById("pregunta" + num).classList.remove("hidden");
+    }
+
+    function final() {
+      document.querySelectorAll(".card > div").forEach(div => div.classList.add("hidden"));
+      document.getElementById("final").classList.remove("hidden");
+    }
+
+    function acepta() {
+      document.getElementById("final").classList.add("hidden");
+      document.getElementById("respuesta").classList.remove("hidden");
+    }
+
+    function mueveBoton(btn) {
+      btn.style.position = "absolute";
+      btn.style.top = Math.random() * 80 + "%";
+      btn.style.left = Math.random() * 80 + "%";
+    }
+  </script>
+
+</body>
+</html>
