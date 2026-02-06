@@ -4,22 +4,29 @@
   <meta charset="UTF-8">
   <title>¿Quieres ser mi San Valentín? 💖</title>
   <style>
+ 
     body {
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
-      text-align: center;
-      padding: 20px;
-      color: #5a1a2c;
-    }
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
+  color: #5a1a2c;
 
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 25px;
-      max-width: 400px;
-      margin: auto;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+
+  margin: 0;
+}
+
+
+  .card {
+  background: white;
+  border-radius: 20px;
+  padding: 35px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
 
     h1 {
       font-size: 26px;
@@ -60,6 +67,11 @@
       50% { transform: scale(1.2); }
       100% { transform: scale(1); }
     }
+       .card button {
+  display: block;
+  width: 80%;
+  margin: 12px auto;
+}
   </style>
 </head>
 <body>
@@ -67,20 +79,22 @@
   <div class="card">
     <div id="inicio">
       <h1>Hola mimor💕</h1>
-      <p>Tengo algo especial para ti, me quebré la cabeza haciendo esto...</p>
+      <p>Tengo algo especial para ti, me quebré la cabeza haciendo esto y espero que te guste...</p>
       <button onclick="empezar()">Empezar 💌</button>
     </div>
 
     <div id="pregunta1" class="hidden">
-      <p>💗 ¿Te imaginaste que algún día haría algo así?</p>
+      <p>💗 ¿Te sorprendí?</p>
       <button onclick="siguiente(2)">Sí mor 💗</button>
-      <button onclick="siguiente(2)">La verdad nop</button>
+      <button onclick="siguiente(2)">La verdad nop xd</button>
     </div>
 
     <div id="pregunta2" class="hidden">
-      <p>🌹 ¿Qué plan te gusta más?</p>
-      <button onclick="siguiente(3)">Cenita y facetime 🍝</button>
-      <button onclick="siguiente(3)">Película y llamada 🎬</button>
+      <p>🌹 ¿Cuál es nuestro aniversario?</p>
+      <button onclick="error()">04 mayo 2024</button>
+      <button onclick="siguiente(3)">04 abril 2024</button>
+   
+      <p id="error2" class="hidden">Segurooo?????</p>
     </div>
 
     <div id="pregunta3" class="hidden">
@@ -99,9 +113,9 @@
     </div>
 
     <div id="respuesta" class="hidden">
-      <h1>🥹💘</h1>
-      <p>Sabía que dirías que sí.</p>
-      <p>Espero hacer de ese día algo inolvidable 💕</p>
+      <h1>❤️❤️</h1>
+      <p>Literalmente no podías decir que no lol.</p>
+      <p>Pero espero hacer de ese día algo inolvidable 💕</p>
     </div>
   </div>
 
@@ -131,7 +145,11 @@
       btn.style.top = Math.random() * 80 + "%";
       btn.style.left = Math.random() * 80 + "%";
     }
-  </script>
+   <script>
+  function error() {
+    document.getElementById("error2").classList.remove("hidden");
+  }
+</script>
 
 </body>
 </html>
