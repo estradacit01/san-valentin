@@ -47,7 +47,9 @@
       transform: scale(1.05);
     }
 
-    .hidden { display: none; }
+    .hidden {
+  display: none !important;
+}
 
     .heart {
       font-size: 40px;
@@ -196,19 +198,22 @@
   }
 
   function acepta() {
-    document.querySelectorAll(".card > div").forEach(div =>
-      div.classList.add("hidden")
-    );
+  document.querySelectorAll(".card > div").forEach(div =>
+    div.classList.add("hidden")
+  );
 
-    // mostrar respuesta
-    document.getElementById("respuesta").classList.remove("hidden");
+  // mostrar respuesta
+  document.getElementById("respuesta").classList.remove("hidden");
 
-    // después de 4 segundos, mostrar contador
-    setTimeout(() => {
-      document.getElementById("respuesta").classList.add("hidden");
-      document.getElementById("finalContador").classList.remove("hidden");
-    }, 4000);
-  }
+  // después de 4 segundos, mostrar contador y activar reloj
+  setTimeout(() => {
+    document.getElementById("respuesta").classList.add("hidden");
+    document.getElementById("finalContador").classList.remove("hidden");
+
+    actualizarContador();
+    setInterval(actualizarContador, 1000);
+  }, 4000);
+}
 
   function error(btn) {
     document.getElementById("modalError").classList.remove("hidden");
