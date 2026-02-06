@@ -148,12 +148,13 @@ button:hover { background: #ff1e4d; transform: scale(1.05); }
 function empezar() {
   document.getElementById("inicio").classList.add("hidden");
   document.getElementById("pregunta1").classList.remove("hidden");
-  
-  // iniciar música de fondo
+
+  // Iniciar música al primer click
   const musica = document.getElementById("musicaFondo");
-  musica.volume = 0.2; // bajito
-  musica.play();
+  musica.volume = 0.8; // bajito y romántico
+  musica.play().catch(e => console.log("Música bloqueada:", e));
 }
+
 
 function siguiente(num) {
   document.querySelectorAll(".card > div").forEach(d => d.classList.add("hidden"));
