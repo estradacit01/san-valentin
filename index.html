@@ -22,7 +22,7 @@ body {
   width: 90%;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   text-align: center;
-  position: relative;
+  position: relative; /* importante para los corazones */
 }
 h1 { font-size: 26px; }
 p { font-size: 18px; }
@@ -34,6 +34,13 @@ button {
   padding: 12px 20px;
   font-size: 16px;
   margin: 12px auto;
+  cursor: pointer;
+  display: block;
+  width: 80%;
+  transition: transform 0.2s, background 0.2s;
+}
+button:hover {
+  background: #ff1e4d
   cursor: pointer;
   display: block;
   width: 80%;
