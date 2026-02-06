@@ -2,39 +2,31 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>¿Quieres ser mi San Valentín? 💖</title>
+  <title>Sorpresa 💖</title>
+
   <style>
- 
     body {
-  font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
-  color: #5a1a2c;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-
-  margin: 0;
-}
-
-
-  .card {
-  background: white;
-  border-radius: 20px;
-  padding: 35px;
-  max-width: 500px;
-  width: 90%;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-    h1 {
-      font-size: 26px;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
+      color: #5a1a2c;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
     }
 
-    p {
-      font-size: 18px;
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 35px;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     }
+
+    h1 { font-size: 26px; }
+    p { font-size: 18px; }
 
     button {
       background: #ff4d6d;
@@ -43,8 +35,10 @@
       border-radius: 30px;
       padding: 12px 20px;
       font-size: 16px;
-      margin: 8px;
+      margin: 12px auto;
       cursor: pointer;
+      display: block;
+      width: 80%;
       transition: transform 0.2s, background 0.2s;
     }
 
@@ -53,9 +47,7 @@
       transform: scale(1.05);
     }
 
-    .hidden {
-      display: none;
-    }
+    .hidden { display: none; }
 
     .heart {
       font-size: 40px;
@@ -67,19 +59,31 @@
       50% { transform: scale(1.2); }
       100% { transform: scale(1); }
     }
-       .card button {
-  display: block;
-  width: 80%;
-  margin: 12px auto;
-}
+
+    @keyframes temblar {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+
+    .temblar {
+      animation: temblar 0.4s;
+    }
   </style>
 </head>
+
 <body>
 
+  <!-- 🔊 AUDIO VA AQUÍ -->
+  <audio id="sonidoError" src="https://www.myinstants.com/media/sounds/error.mp3"></audio>
+
   <div class="card">
+
     <div id="inicio">
       <h1>Hola mimor💕</h1>
-      <p>Tengo algo especial para ti, me quebré la cabeza haciendo esto y espero que te guste...</p>
+      <p>Tengo algo especial para ti...</p>
       <button onclick="empezar()">Empezar 💌</button>
     </div>
 
@@ -91,9 +95,8 @@
 
     <div id="pregunta2" class="hidden">
       <p>🌹 ¿Cuál es nuestro aniversario?</p>
-      <button onclick="error()">04 mayo 2024</button>
+      <button onclick="error(this)">04 mayo 2024</button>
       <button onclick="siguiente(3)">04 abril 2024</button>
-   
       <p id="error2" class="hidden">Segurooo?????</p>
     </div>
 
@@ -117,6 +120,7 @@
       <p>Literalmente no podías decir que no lol.</p>
       <p>Pero espero hacer de ese día algo inolvidable 💕</p>
     </div>
+
   </div>
 
 <script>
