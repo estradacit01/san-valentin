@@ -25,7 +25,7 @@ body {
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   text-align: center;
   position: relative;
-  z-index: 1;
+  z-index: 1; /* la carta encima de los corazones */
 }
 
 h1 { font-size: 26px; }
@@ -62,13 +62,13 @@ button:hover { background: #ff1e4d; transform: scale(1.05); }
 #contador { margin:15px 0; font-size:18px; font-weight:bold; color:#ff4d6d; }
 #botonNo { width: 100px; padding: 8px 12px; font-size: 14px; }
 
-/* CORAZONES FLOTANTES */
+/* CORAZONES FLOTANTES POR TODA LA PANTALLA */
 .heart-float {
   position: fixed;
   color: #ff4d6d;
   pointer-events: none;
   user-select: none;
-  z-index: 0;
+  z-index: 0; /* detrás de la carta */
   opacity: 1;
   animation-name: floatUp;
   animation-timing-function: linear;
@@ -83,16 +83,16 @@ button:hover { background: #ff1e4d; transform: scale(1.05); }
 </head>
 <body>
 
-<!-- Audios locales -->
-<audio id="musicaFondo" src="musica.mp3" loop></audio>
-<audio id="sonidoError" src="error.mp3"></audio>
-<audio id="sonidoExito" src="exito.mp3"></audio>
+<!-- Audios -->
+<audio id="musicaFondo" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+<audio id="sonidoError" src="https://www.orangefreesounds.com/wp-content/uploads/2017/01/Button-click-sound.mp3"></audio>
+<audio id="sonidoExito" src="https://www.orangefreesounds.com/wp-content/uploads/2017/12/short-notification-sound.mp3"></audio>
 
 <div class="card">
   <div id="inicio">
     <h1>Hola mimor💕</h1>
     <p>Tengo algo especial para ti...</p>
-    <button id="botonEmpezar">Empezar 💌</button>
+    <button onclick="empezar()">Empezar 💌</button>
   </div>
 
   <div id="pregunta1" class="hidden">
@@ -103,7 +103,7 @@ button:hover { background: #ff1e4d; transform: scale(1.05); }
 
   <div id="pregunta2" class="hidden">
     <p>🌹 ¿Cuál es nuestro aniversario?</p>
-    <button id="btnError" onclick="error(this)">04 mayo 2024</button>
+    <button onclick="error(this)">04 mayo 2024</button>
     <button onclick="siguiente(3)">04 abril 2024</button>
   </div>
 
@@ -119,7 +119,7 @@ button:hover { background: #ff1e4d; transform: scale(1.05); }
     <h1>Entonces...</h1>
     <p>¿Quieres ser mi cita este San Valentín? 🌹</p>
     <button onclick="acepta()">SÍ 💖</button>
-    <button id="botonNo">No 😅</button>
+    <button id="botonNo" onclick="mueveBoton(this)">No 😅</button>
   </div>
 
   <div id="respuesta" class="hidden">
@@ -146,71 +146,67 @@ button:hover { background: #ff1e4d; transform: scale(1.05); }
 </div>
 
 <script>
-// === FUNCIONES ===
-const musica = document.getElementById("musicaFondo");
-const sonidoError = document.getElementById("sonidoError");
-const sonidoExito = document.getElementById("sonidoExito");
-
-// START BUTTON
-document.getElementById('botonEmpezar').addEventListener('click', function(){
-  musica.volume = 0.2;
-  musica.play();
+function empezar() {
   document.getElementById("inicio").classList.add("hidden");
   document.getElementById("pregunta1").classList.remove("hidden");
-});
+  
+  // iniciar música de fondo
+  const musica = document.getElementById("musicaFondo");
+  musica.volume = 0.2; // bajito
+  musica.play();
+}
 
-function siguiente(num){
+function siguiente(num) {
   document.querySelectorAll(".card > div").forEach(d => d.classList.add("hidden"));
   document.getElementById("pregunta"+num).classList.remove("hidden");
 }
 
-function final(){
+function final() {
   document.querySelectorAll(".card > div").forEach(d => d.classList.add("hidden"));
   document.getElementById("final").classList.remove("hidden");
 }
 
-function acepta(){
+function acepta() {
   document.querySelectorAll(".card > div").forEach(d => d.classList.add("hidden"));
   document.getElementById("respuesta").classList.remove("hidden");
-  sonidoExito.play();
+  document.getElementById("sonidoExito").play();
 
-  setTimeout(()=>{
+  setTimeout(() => {
     document.getElementById("respuesta").classList.add("hidden");
     document.getElementById("finalContador").classList.remove("hidden");
     actualizarContador();
-    setInterval(actualizarContador,1000);
-  },4000);
+    setInterval(actualizarContador, 1000);
+  }, 4000);
 }
 
-function error(btn){
+function error(btn) {
   document.getElementById("modalError").classList.remove("hidden");
-  sonidoError.play();
+  document.getElementById("sonidoError").play();
   btn.classList.add("temblar");
 }
 
-document.getElementById("botonNo").addEventListener('click', function(){
-  const btn = this;
+function mueveBoton(btn) {
   const card = document.querySelector('.card');
   const maxWidth = card.clientWidth - btn.offsetWidth;
   const maxHeight = card.clientHeight - btn.offsetHeight;
   btn.style.position = "absolute";
   btn.style.left = Math.random() * maxWidth + "px";
   btn.style.top = Math.random() * maxHeight + "px";
-  sonidoError.play();
-});
+  document.getElementById("sonidoError").play();
+}
 
-function cerrarError(){
+function cerrarError() {
   document.getElementById("modalError").classList.add("hidden");
   document.querySelectorAll(".temblar").forEach(b => b.classList.remove("temblar"));
 }
 
-function actualizarContador(){
+function actualizarContador() {
   const ahora = new Date();
-  const sanValentin = new Date(ahora.getFullYear(),1,14);
-  if(ahora>sanValentin) sanValentin.setFullYear(sanValentin.getFullYear()+1);
+  const sanValentin = new Date(ahora.getFullYear(), 1, 14);
+  if (ahora > sanValentin) sanValentin.setFullYear(sanValentin.getFullYear()+1);
 
   const diff = sanValentin - ahora;
-  const dias = Math.floor(diff/(1000*60*60*24));
+  const dias = Math.floor(diff / (1000*60*60*24));
   const horas = Math.floor((diff/(1000*60*60))%24);
   const minutos = Math.floor((diff/(1000*60))%60);
   const segundos = Math.floor((diff/1000)%60);
@@ -219,8 +215,8 @@ function actualizarContador(){
 }
 actualizarContador();
 
-// CORAZONES FLOTANTES
-function crearCorazon(){
+// === CORAZONES FLOTANTES POR TODA LA PANTALLA ===
+function crearCorazon() {
   const corazon = document.createElement('div');
   corazon.classList.add('heart-float');
   corazon.textContent = '💖';
@@ -228,10 +224,10 @@ function crearCorazon(){
   corazon.style.fontSize = 10 + Math.random() * 25 + 'px';
   corazon.style.animationDuration = 2 + Math.random() * 3 + 's';
   document.body.appendChild(corazon);
-  setTimeout(()=>corazon.remove(),5000);
+  setTimeout(() => corazon.remove(), 5000);
 }
-setInterval(crearCorazon,100);
+setInterval(crearCorazon, 100); // muchos corazones
 </script>
+
 </body>
 </html>
-
